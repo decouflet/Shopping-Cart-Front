@@ -1,12 +1,29 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
+    'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'})
+};
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
 
+  private cartCount = new BehaviorSubject<number>(0);
+  cartCount$ = this.cartCount.asObservable();
+
+
   constructor(private http: HttpClient) { }
+
+  updateCartCount(count: number) {
+    this.cartCount.next(count);
+  }
 
   buyCart(credentials: { name: string; password: string }, cart_id: number) {
     return this.http.post<any>(`http://localhost:8080/api/cart/create?cart_id=${cart_id}`, credentials);
@@ -21,14 +38,15 @@ export class CartService {
   }
 
   removeOrDeleteProduct(cart_id: number, product_id: number, quantity: number) {
-    return this.http.delete<any>(`http://localhost:8080/api/cart/remove?id_cart=${cart_id}&id_product=${product_id}&quantity=${quantity}`);
+    console.log(httpOptions);
+    return this.http.delete<any>(`http://localhost:8080/api/cart/remove-or-delete-product?id_cart=${cart_id}&id_product=${product_id}&quantity=${quantity}`, httpOptions);
   }
 
   addProduct(cart_id: number, product_id: number, quantity: number) {
-    return this.http.post<any>(`http://localhost:8080/api/cart/add?id_cart=${cart_id}&id_product=${product_id}&quantity=${quantity}`, {});
+    return this.http.put<any>(`http://localhost:8080/api/cart/add-product?id_cart=${cart_id}&id_product=${product_id}&quantity=${quantity}`, null, httpOptions);
   }
 
   deleteCart(cart_id: number) {
-    return this.http.delete<any>(`http://localhost:8080/api/cart/delete?id_cart=${cart_id}`);
+    return this.http.delete<any>(`http://localhost:8080/api/cart/delete?id=${cart_id}`, httpOptions);
   }
 }

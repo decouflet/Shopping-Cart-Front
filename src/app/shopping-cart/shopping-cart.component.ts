@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CartService } from '../services/cart.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -41,12 +42,19 @@ export class ShoppingCartComponent {
       this.cartService.buyCart(this.credentials, this.cart_id).subscribe((data) => {
           this.cart_id = data.id;
           this.cart_create = true;
+          Swal.fire({
+            title: 'Cart created',
+            text: data.message,
+            icon: 'success',
+            confirmButtonText: 'Ok'
+          });
         }
       );
     }
   }
 
   addProduct(product_id: number) {
+    console.log(product_id);
     this.cartService.addProduct(this.cart_id, product_id, 1).subscribe((data) => {
       console.log(data);
     });
@@ -60,13 +68,24 @@ export class ShoppingCartComponent {
 
   payCart() {
     this.cartService.payCart(this.cart_id).subscribe((data) => {
-      console.log(data);
+      Swal.fire({
+        title: 'Cart paid',
+        text: data.message,
+        icon: 'success',
+        confirmButtonText: 'Ok'
+      });
+
     });
   }
 
   calculateCostCart() {
     this.cartService.calculateCost(this.cart_id).subscribe((data) => {
-      console.log(data);
+      Swal.fire({
+        title: 'Cart cost',
+        text: `The cart cost is ${data.value}`,
+        icon: 'info',
+        confirmButtonText: 'Ok'
+      });
     });
   }
 
@@ -74,6 +93,12 @@ export class ShoppingCartComponent {
     this.cartService.deleteCart(this.cart_id).subscribe((data) => {
       this.cart_id = 0;
       this.cart_create = false;
+      Swal.fire({
+        title: 'Cart deleted',
+        text: data.message,
+        icon: 'success',
+        confirmButtonText: 'Ok'
+      });
     });
   }
 

@@ -20,6 +20,7 @@ export class ButtonShopComponent {
   constructor() { }
 
   addProduct(){
+    console.log(this.product_name);
     this.addProductEvent.emit(this.product_name);
     this.product_count += 1;
   }

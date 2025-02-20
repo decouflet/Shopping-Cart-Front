@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { Head, ObservableLike } from 'rxjs';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ProductDTO } from 'src/app/DTOs/product';
 import { HeaderComponent } from 'src/app/header/header.component';
+import { CartService } from 'src/app/services/cart.service';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -11,19 +11,21 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class ProductsComponent {
 
-  @ViewChild('header')
-  header: HeaderComponent = new HeaderComponent;
-
   @Input()
   cart_create: boolean = false;
 
   @Output()
-  productEvent = new EventEmitter<number>();
+  productAddedEvent = new EventEmitter<number>();
+
+  @Output()
+  productSubstractEvent = new EventEmitter<number>();
 
   productList: ProductDTO[];
   productsIdName: { [key: string]: number } = {};
 
-  constructor(private productService: ProductService) { }
+  constructor(private productService: ProductService,
+              private cartService: CartService
+  ) { }
 
   ngOnInit(): void {
     this.productService.getProducts().subscribe((data) => {
@@ -31,17 +33,18 @@ export class ProductsComponent {
       this.productList.forEach((product) => {
         this.productsIdName[product.name] = product.id;
       });
+      console.log(this.productsIdName);
     });
   }
 
   addProduct(product_name: string) {
-    this.header.addProduct();
-    this.productEvent.emit(this.productsIdName[product_name]);
+    console.log("product name en products.component.ts: ", product_name);
+    this.cartService.updateCartCount(1);
+    this.productAddedEvent.emit(this.productsIdName[product_name]);
   }
 
   substractProduct(product_name: string) {
-    this.header.substractProduct();
-    this.productEvent.emit(this.productsIdName[product_name]);
+    this.productSubstractEvent.emit(this.productsIdName[product_name]);
   }
 
 }

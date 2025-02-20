@@ -15,20 +15,20 @@
         <section class="col-8 mb-4">
             <div class="row">
                 <div class="col-3 cart-button">
-                    <button type="button" class="btn btn-primary" (click)="createCart()">Create cart</button>
+                    <button type="button" class="btn btn-primary cart-button-content" (click)="createCart()">Create cart</button>
                 </div>
                 <div class="col-3 cart-button">
-                    <button type="button" class="btn btn-primary" [disabled]="!cart_create" (click)="payCart()">Pay cart</button>
+                    <button type="button" class="btn btn-primary cart-button-content" [disabled]="!cart_create" (click)="payCart()">Pay cart</button>
                 </div>
                 <div class="col-3 cart-button">
-                    <button type="button" class="btn btn-primary" [disabled]="!cart_create" (click)="deleteCart()">Delete cart</button>
+                    <button type="button" class="btn btn-primary cart-button-content" [disabled]="!cart_create" (click)="deleteCart()">Delete cart</button>
                 </div>
                 <div class="col-3 cart-button">
-                    <button type="button" class="btn btn-primary" [disabled]="!cart_create" (click)="calculateCostCart()">Cost cart</button>
+                    <button type="button" class="btn btn-primary cart-button-content" [disabled]="!cart_create" (click)="calculateCostCart()">Cost cart</button>
                 </div>
             </div>
         </section>
     </div>
 </form>
 
-<app-products [cart_create]="cart_create" (productEvent)="addProduct($event)"></app-products>
+<app-products [cart_create]="cart_create" (productAddedEvent)="addProduct($event)" (productSubstractEvent)="substractProduct($event)"></app-products>
