@@ -1,0 +1,41 @@
+
+
+nav{
+    height: 70px;
+    padding: 8px;
+    justify-content: space-between;
+    background: rgb(212, 34, 34);
+}
+
+h1{
+    color: white;
+    font-size: 30px;
+    margin-left: 20px;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 900;
+    border-radius: 20%;
+
+}
+
+.menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cart {
+    font-size: 12px;
+    background-color : white;
+    color: rgb(212, 34, 34);
+    border-radius: 1rem;
+    padding: 2px 9px;
+    position: relative;
+    top: -0.5rem;
+    left: -0.3rem;
+    border: solid 0.01rem black;
+}
+
+#cart{
+    color: white;
+}
+
