@@ -6,12 +6,16 @@ import { AppComponent } from './app.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HeaderComponent } from './header/header.component';
+import { ButtonShopComponent } from './shopping-cart/button-shop/button-shop.component';
+import { ProductsComponent } from './shopping-cart/products/products.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ShoppingCartComponent,
-    HeaderComponent
+    HeaderComponent,
+    ButtonShopComponent,
+    ProductsComponent
   ],
   imports: [
     BrowserModule,
