@@ -7,4 +7,17 @@ import { Component } from '@angular/core';
 })
 export class HeaderComponent {
 
+  products_count: number = 0;
+
+  constructor() { }
+
+  addProduct() {
+    this.products_count += 1;
+  }
+
+  substractProduct() {  
+    if(this.products_count > 0){
+      this.products_count -= 1;
+    }
+  }
 }

@@ -1,34 +1,34 @@
-<form class="form-wrapper">
+<form class="form-wrapper" [formGroup]="shoppingForm">
     <div class="row">
         <section class="col-4">
             <div class="row">
                 <div class="form-group col-6">
                     <h4>Nombre</h4>
-                    <input type="text" class="form-control" id="nombre" placeholder="Nombre">
+                    <input type="text" class="form-control" id="nombre" placeholder="Nombre" formControlName="name" [class.is-invalid]="isInvalid('name')">
                 </div>
                 <div class="form-group col-6">
                     <h4>Contraseña</h4>
-                    <input type="password" class="form-control" id="contraseña" placeholder="Contraseña">
+                    <input type="password" class="form-control" id="contraseña" placeholder="Contraseña" formControlName="password" [class.is-invalid]="isInvalid('name')">
                 </div>
             </div>
         </section>
         <section class="col-8 mb-4">
             <div class="row">
                 <div class="col-3 cart-button">
-                    <button type="button" class="btn btn-primary">Create cart</button>
+                    <button type="button" class="btn btn-primary" (click)="createCart()">Create cart</button>
                 </div>
                 <div class="col-3 cart-button">
-                    <button type="button" class="btn btn-primary">Pay cart</button>
+                    <button type="button" class="btn btn-primary" [disabled]="!cart_create" (click)="payCart()">Pay cart</button>
                 </div>
                 <div class="col-3 cart-button">
-                    <button type="button" class="btn btn-primary">Delete cart</button>
+                    <button type="button" class="btn btn-primary" [disabled]="!cart_create" (click)="deleteCart()">Delete cart</button>
                 </div>
                 <div class="col-3 cart-button">
-                    <button type="button" class="btn btn-primary">Cost cart</button>
+                    <button type="button" class="btn btn-primary" [disabled]="!cart_create" (click)="calculateCostCart()">Cost cart</button>
                 </div>
             </div>
         </section>
     </div>
 </form>
 
-<app-products></app-products>
+<app-products [cart_create]="cart_create" (productEvent)="addProduct($event)"></app-products>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-button-shop',
@@ -7,4 +7,27 @@ import { Component } from '@angular/core';
 })
 export class ButtonShopComponent {
 
+  @Input() cart_create: boolean = false;
+  @Input() product_name: string;
+  product_count: number = 0;
+
+  @Output()
+  addProductEvent = new EventEmitter<string>();
+
+  @Output()
+  substracProductEvent = new EventEmitter<string>();
+
+  constructor() { }
+
+  addProduct(){
+    this.addProductEvent.emit(this.product_name);
+    this.product_count += 1;
+  }
+
+  substracProduct(){
+    this.substracProductEvent.emit(this.product_name);
+    if(this.product_count > 0){
+      this.product_count -= 1;
+    }
+  }
 }

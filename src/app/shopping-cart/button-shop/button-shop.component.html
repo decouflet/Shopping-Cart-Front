@@ -1,9 +1,9 @@
 <div class="d-flex align-items-center mt-2">
-    <a href="" class="btn btn-light border">
+    <button href="" class="btn btn-light border" [disabled]="!cart_create" [ngClass]="{ 'disabled': !cart_create }">
         <i class="fa fa-plus"></i>
-    </a>
-    <span class="mx-3 fs-5">0</span>
-    <a href="" class="btn btn-light border">
-        <i class="fa fa-minus"></i>
-    </a>
+    </button>
+    <span class="mx-3 fs-5">product_count</span>
+    <button href="" class="btn btn-light border" [disabled]="!cart_create" [ngClass]="{ 'disabled': !cart_create }" (click)="addProduct()">
+        <i class="fa fa-minus" inv></i>
+    </button>
 </div>
