@@ -31,4 +31,11 @@ export class ButtonShopComponent {
       this.product_count -= 1;
     }
   }
+
+  cleanCart(){
+    console.log(this.product_count);
+    console.log("Cleaning cart en button-shop");
+    this.product_count = 0;
+    console.log(this.product_count);
+  }
 }

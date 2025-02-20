@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, QueryList, ViewChildren } from '@angular/core';
 import { ProductDTO } from 'src/app/DTOs/product';
-import { HeaderComponent } from 'src/app/header/header.component';
 import { CartService } from 'src/app/services/cart.service';
 import { ProductService } from 'src/app/services/product.service';
+import { ButtonShopComponent } from '../button-shop/button-shop.component';
 
 @Component({
   selector: 'app-products',
@@ -20,6 +20,8 @@ export class ProductsComponent {
   @Output()
   productSubstractEvent = new EventEmitter<number>();
 
+  @ViewChildren(ButtonShopComponent) buttonShops!: QueryList<ButtonShopComponent>;
+
   productList: ProductDTO[];
   productsIdName: { [key: string]: number } = {};
 
@@ -33,18 +35,29 @@ export class ProductsComponent {
       this.productList.forEach((product) => {
         this.productsIdName[product.name] = product.id;
       });
-      console.log(this.productsIdName);
     });
   }
 
   addProduct(product_name: string) {
-    console.log("product name en products.component.ts: ", product_name);
-    this.cartService.updateCartCount(1);
+    this.cartService.addProductCount(1);
     this.productAddedEvent.emit(this.productsIdName[product_name]);
   }
 
   substractProduct(product_name: string) {
+    this.cartService.subtractProductCount(1);
     this.productSubstractEvent.emit(this.productsIdName[product_name]);
+  }
+
+  cleanCart() {
+    console.log('Cleaning cart en products');
+    this.resetProductCounts();
+    this.cartService.resetTotalProducts();
+  }
+
+  resetProductCounts() {
+    this.buttonShops.forEach(buttonShop => {
+      buttonShop.product_count = 0; // Reinicia el contador de cada botón
+    });
   }
 
 }

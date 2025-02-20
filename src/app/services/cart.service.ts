@@ -21,8 +21,17 @@ export class CartService {
 
   constructor(private http: HttpClient) { }
 
-  updateCartCount(count: number) {
-    this.cartCount.next(count);
+  addProductCount(quantity: number) {
+    this.cartCount.next(this.cartCount.value + quantity);
+  }
+
+  subtractProductCount(quantity: number) {
+    const newTotal = Math.max(0, this.cartCount.value - quantity);
+    this.cartCount.next(newTotal);
+  }
+
+  resetTotalProducts() {
+    this.cartCount.next(0);
   }
 
   buyCart(credentials: { name: string; password: string }, cart_id: number) {

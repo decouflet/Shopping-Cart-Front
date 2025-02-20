@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CartService } from '../services/cart.service';
 import Swal from 'sweetalert2';
+import { ProductsComponent } from './products/products.component';
+import { ProductService } from '../services/product.service';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -10,7 +12,9 @@ import Swal from 'sweetalert2';
 })
 export class ShoppingCartComponent {
 
-  constructor(private cartService: CartService) { }
+  constructor(private cartService: CartService,
+              private productService: ProductService
+  ) { }
 
   public shoppingForm: FormGroup;
   public credentials: { name: string; password: string } = {
@@ -19,6 +23,10 @@ export class ShoppingCartComponent {
   };
   public cart_id: number = 0;
   public cart_create: boolean = false;
+  public cart_clean: boolean = true;
+
+  @ViewChild('products')
+  products: ProductsComponent = new ProductsComponent(this.productService, this.cartService);
 
   ngOnInit(): void {
     this.shoppingForm = new FormGroup({
@@ -42,6 +50,7 @@ export class ShoppingCartComponent {
       this.cartService.buyCart(this.credentials, this.cart_id).subscribe((data) => {
           this.cart_id = data.id;
           this.cart_create = true;
+          this.cart_clean = false;
           Swal.fire({
             title: 'Cart created',
             text: data.message,
@@ -74,8 +83,21 @@ export class ShoppingCartComponent {
         icon: 'success',
         confirmButtonText: 'Ok'
       });
-
+      this.cleanCredentials();
+      this.cleanCart();
     });
+  }
+
+  cleanCredentials() {
+    this.shoppingForm.controls['name'].setValue('');
+    this.shoppingForm.controls['password'].setValue('');
+  }
+
+  cleanCart() {
+    this.cart_id = 0;
+    this.cart_create = false;
+    this.cart_clean = true;
+    this.products.cleanCart();
   }
 
   calculateCostCart() {
@@ -91,8 +113,8 @@ export class ShoppingCartComponent {
 
   deleteCart() {
     this.cartService.deleteCart(this.cart_id).subscribe((data) => {
-      this.cart_id = 0;
-      this.cart_create = false;
+      this.cleanCredentials();
+      this.cleanCart();
       Swal.fire({
         title: 'Cart deleted',
         text: data.message,

@@ -14,7 +14,7 @@ export class HeaderComponent {
 
   ngOnInit(): void {
     this.cartService.cartCount$.subscribe(count => {
-      this.products_count += count;
+      this.products_count = count;
     });
   }
 
