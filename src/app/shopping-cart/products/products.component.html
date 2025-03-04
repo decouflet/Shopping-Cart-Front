@@ -1,30 +1,13 @@
-<section class="mt-5 row">
-    <div class="col-3 d-flex flex-column align-items-left" id="Laptop">
-        <img src="assets/products/laptop.jpg" alt="" class="image-product">
-        <app-button-shop #buttonShop [cart_create]="cart_create" [product_name]="'Laptop'" (addProductEvent)="addProduct($event)" (substracProductEvent)="substractProduct($event)"></app-button-shop>
-    </div>
-    <div class="col-3 d-flex flex-column align-items-left">
-        <img src="assets/products/auriculares.jpg" alt="" class="image-product">
-        <app-button-shop #buttonShop [cart_create]="cart_create" [product_name]="'Auriculares'" (addProductEvent)="addProduct($event)" (substracProductEvent)="substractProduct($event)"></app-button-shop>
-    </div>
-</section>
-<section class="row">
-    <div class="col-3 d-flex flex-column align-items-left">
-        <img src="assets/products/monitor.jpg" alt="" class="image-product">
-        <app-button-shop #buttonShop [cart_create]="cart_create" [product_name]="'Monitor'" (addProductEvent)="addProduct($event)" (substracProductEvent)="substractProduct($event)"></app-button-shop>
-    </div>
-    <div class="col-3 d-flex flex-column align-items-left">
-        <img src="assets/products/mouse.jpg" alt="" class="image-product">
-        <app-button-shop #buttonShop [cart_create]="cart_create" [product_name]="'Mouse'" (addProductEvent)="addProduct($event)" (substracProductEvent)="substractProduct($event)"></app-button-shop>
-    </div>
-</section>
-<section class="row">
-    <div class="col-3 d-flex flex-column align-items-left">
-        <img src="assets/products/teclado.jpg" alt="" class="image-product">
-        <app-button-shop #buttonShop [cart_create]="cart_create" [product_name]="'Teclado'" (addProductEvent)="addProduct($event)" (substracProductEvent)="substractProduct($event)"></app-button-shop>
-    </div>
-    <div class="col-3 d-flex flex-column align-items-left">
-        <img src="assets/products/gabinete.jpg" alt="" class="image-product">
-        <app-button-shop #buttonShop [cart_create]="cart_create" [product_name]="'Gabinete'" (addProductEvent)="addProduct($event)" (substracProductEvent)="substractProduct($event)"></app-button-shop>
+<section class="container mt-5">
+    <div class="row g-3"> <!-- g-3 agrega espacio entre los productos -->
+        <div class="col-5 d-flex flex-column align-items-center" *ngFor="let product of productList">
+            <img [src]="'assets/products/' + product.name + '.jpg'" alt="" class="image-product">
+            <app-button-shop 
+                [cart_create]="cart_create" 
+                [product_name]="product.name" 
+                (addProductEvent)="addProduct($event)" 
+                (substracProductEvent)="substractProduct($event)">
+            </app-button-shop>
+        </div>
     </div>
 </section>
