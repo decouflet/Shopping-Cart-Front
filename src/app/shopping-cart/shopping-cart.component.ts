@@ -4,6 +4,8 @@ import { CartService } from '../services/cart.service';
 import Swal from 'sweetalert2';
 import { ProductsComponent } from './products/products.component';
 import { ProductService } from '../services/product.service';
+import { ClientService } from '../services/client.service';
+import { ClientDTO } from '../DTOs/client';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -13,7 +15,8 @@ import { ProductService } from '../services/product.service';
 export class ShoppingCartComponent {
 
   constructor(private cartService: CartService,
-              private productService: ProductService
+              private productService: ProductService,
+              private clientService: ClientService
   ) { }
 
   public shoppingForm: FormGroup;
@@ -33,6 +36,13 @@ export class ShoppingCartComponent {
     this.shoppingForm = new FormGroup({
       name: new FormControl('', [Validators.required]),
       password: new FormControl('',[Validators.required]),
+    });
+    this.getClients();
+  }
+
+  getClients() {
+    this.clientService.getClients().subscribe((data) => {
+      this.clients = data as ClientDTO[];
     });
   }
 
@@ -86,6 +96,7 @@ export class ShoppingCartComponent {
       });
       this.cleanCredentials();
       this.cleanCart();
+      this.getClients();
     });
   }
 
