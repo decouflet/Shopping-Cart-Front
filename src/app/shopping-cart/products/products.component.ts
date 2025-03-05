@@ -24,6 +24,8 @@ export class ProductsComponent {
 
   productList: ProductDTO[];
   productsIdName: { [key: string]: number } = {};
+  currentIndex = 0;
+  itemsPerPage = 4;
 
   constructor(private productService: ProductService,
               private cartService: CartService
@@ -58,6 +60,22 @@ export class ProductsComponent {
     this.buttonShops.forEach(buttonShop => {
       buttonShop.product_count = 0; // Reinicia el contador de cada botón
     });
+  }
+
+  get paginatedProducts() {
+    return this.productList.slice(this.currentIndex, this.currentIndex + this.itemsPerPage);
+  }
+
+  nextPage() {
+    if (this.currentIndex + this.itemsPerPage < this.productList.length) {
+      this.currentIndex += this.itemsPerPage;
+    }
+  }
+
+  prevPage() {
+    if (this.currentIndex > 0) {
+      this.currentIndex -= this.itemsPerPage;
+    }
   }
 
 }

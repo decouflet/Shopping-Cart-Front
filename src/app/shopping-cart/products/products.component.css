@@ -1,5 +1,30 @@
 
 .image-product {
     width: 170px;
-    height: 170px;
+    height: auto;
+    max-width: 150px;
+    border-radius: 10px;
+}
+
+.price {
+    font-family: sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #e31122;
+}
+
+.select:hover {
+    border: 1px solid #e31122;
+    border-radius: 5%;
+}
+
+.select {
+    border: 1px solid transparent;
+    border-radius: 5%;
+    transition: border 0.3s ease-in-out;
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }

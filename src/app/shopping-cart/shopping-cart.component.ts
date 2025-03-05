@@ -27,8 +27,7 @@ export class ShoppingCartComponent {
   public cart_id: number = 0;
   public cart_create: boolean = false;
   public cart_clean: boolean = true;
-  public clients: any = [{name: 'Juan perez', vip: 'Yes', spent: '$2000'}, {name: 'María López', vip: 'Yes', spent: '$94217'}];
-
+  public clients: ClientDTO[];
   @ViewChild('products')
   products: ProductsComponent = new ProductsComponent(this.productService, this.cartService);
 

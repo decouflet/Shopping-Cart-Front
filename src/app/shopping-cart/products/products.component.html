@@ -1,6 +1,6 @@
 <section class="container mt-5">
-    <div class="row g-3"> <!-- g-3 agrega espacio entre los productos -->
-        <div class="col-5 d-flex flex-column align-items-center" *ngFor="let product of productList">
+    <div class="row g-3">
+        <div class="col-5 d-flex flex-column align-items-center select" *ngFor="let product of paginatedProducts">
             <img [src]="'assets/products/' + product.name + '.jpg'" alt="" class="image-product">
             <app-button-shop 
                 [cart_create]="cart_create" 
@@ -8,6 +8,15 @@
                 (addProductEvent)="addProduct($event)" 
                 (substracProductEvent)="substractProduct($event)">
             </app-button-shop>
+            <span class="price">{{"$" + product.price}}</span>
         </div>
+    </div>
+    <div class="d-flex justify-content-between align-items-center mb-3 mt-4">
+        <button class="btn btn-outline-danger" (click)="prevPage()" [disabled]="currentIndex === 0">
+            <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <button class="btn btn-outline-danger arrow-button" (click)="nextPage()" [disabled]="currentIndex + itemsPerPage >= productList.length">
+            <i class="fa-solid fa-chevron-right"></i>
+        </button>
     </div>
 </section>
