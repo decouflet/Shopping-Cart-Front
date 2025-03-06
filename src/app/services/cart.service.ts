@@ -18,8 +18,24 @@ export class CartService {
   private cartCount = new BehaviorSubject<number>(0);
   cartCount$ = this.cartCount.asObservable();
 
+  private productCounts: { [key: string]: number } = {};
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
+
+  getProductCount(productName: string): number {
+    return this.productCounts[productName] || 0;
+  }
+
+  addProductButton(productName: string): void {
+    this.productCounts[productName] = (this.productCounts[productName] || 0) + 1;
+  }
+
+  // Restar cantidad de un producto
+  substractProductButton(productName: string): void {
+    if (this.productCounts[productName] && this.productCounts[productName] > 0) {
+      this.productCounts[productName]--;
+    }
+  }
 
   addProductCount(quantity: number) {
     this.cartCount.next(this.cartCount.value + quantity);
@@ -28,6 +44,10 @@ export class CartService {
   subtractProductCount(quantity: number) {
     const newTotal = Math.max(0, this.cartCount.value - quantity);
     this.cartCount.next(newTotal);
+  }
+  
+  cleanCart(): void {
+    this.productCounts = {};
   }
 
   resetTotalProducts() {

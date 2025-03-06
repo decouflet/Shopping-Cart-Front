@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-button-shop',
@@ -9,7 +10,6 @@ export class ButtonShopComponent {
 
   @Input() cart_create: boolean = false;
   @Input() product_name: string;
-  product_count: number = 0;
 
   @Output()
   addProductEvent = new EventEmitter<string>();
@@ -17,25 +17,26 @@ export class ButtonShopComponent {
   @Output()
   substracProductEvent = new EventEmitter<string>();
 
-  constructor() { }
+  constructor(private cartService: CartService) { }
 
   addProduct(){
     console.log(this.product_name);
     this.addProductEvent.emit(this.product_name);
-    this.product_count += 1;
+    this.cartService.addProductButton(this.product_name);
   }
 
   substracProduct(){
     this.substracProductEvent.emit(this.product_name);
     if(this.product_count > 0){
-      this.product_count -= 1;
+      this.cartService.substractProductButton(this.product_name);
     }
   }
 
   cleanCart(){
-    console.log(this.product_count);
-    console.log("Cleaning cart en button-shop");
-    this.product_count = 0;
-    console.log(this.product_count);
+    this.cartService.cleanCart();
+  }
+
+  get product_count(): number {
+    return this.cartService.getProductCount(this.product_name);
   }
 }

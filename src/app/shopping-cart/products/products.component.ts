@@ -58,7 +58,7 @@ export class ProductsComponent {
 
   resetProductCounts() {
     this.buttonShops.forEach(buttonShop => {
-      buttonShop.product_count = 0; // Reinicia el contador de cada botón
+      buttonShop.cleanCart();
     });
   }
 
