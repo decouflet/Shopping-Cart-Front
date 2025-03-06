@@ -28,3 +28,10 @@ button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
 }
+
+.name {
+    color: #4A4A6D;
+    font-family: sans-serif;
+    font-weight: 200;
+    font-size: 20px;
+}
