@@ -73,7 +73,6 @@ export class ShoppingCartComponent {
   }
 
   addProduct(product_id: number) {
-    console.log(product_id);
     this.cartService.addProduct(this.cart_id, product_id, 1).subscribe((data) => {
       console.log(data);
     });

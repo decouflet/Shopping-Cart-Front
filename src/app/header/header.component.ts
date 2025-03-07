@@ -9,6 +9,8 @@ import { CartService } from '../services/cart.service';
 export class HeaderComponent {
 
   products_count: number = 0;
+  productName: string = '';
+  categories: string[] = ['Electronics', 'Appliances', 'Tools'];
 
   constructor(private cartService: CartService) { }
 
@@ -16,6 +18,10 @@ export class HeaderComponent {
     this.cartService.cartCount$.subscribe(count => {
       this.products_count = count;
     });
+  }
+
+  updateProductSearch() {
+    this.cartService.updateProductSearch(this.productName);
   }
 
   addProduct() {
@@ -26,5 +32,9 @@ export class HeaderComponent {
     if(this.products_count > 0){
       this.products_count -= 1;
     }
+  }
+
+  selectCategory(category: string) {
+    this.cartService.updateCategory(category);
   }
 }
