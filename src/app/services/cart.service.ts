@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, count } from 'rxjs';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -24,23 +24,39 @@ export class CartService {
   private category = new BehaviorSubject<string>('');
   category$ = this.category.asObservable();
 
+  private cartUpdated = new BehaviorSubject<{ [key: string]: { count: number, price: number } }>({});
 
-  private productCounts: { [key: string]: number } = {};
+  private productCounts: { [key: string]: { count: number, price: number } } = {};
 
   constructor(private http: HttpClient) {}
 
-  getProductCount(productName: string): number {
-    return this.productCounts[productName] || 0;
+  getCartUpdates() {
+    return this.cartUpdated.asObservable();
   }
 
-  addProductButton(productName: string): void {
-    this.productCounts[productName] = (this.productCounts[productName] || 0) + 1;
+  getProductCount(productName: string): number {
+    return this.productCounts[productName]?.count || 0;
+  }
+
+  getProductCounts() {
+    return this.productCounts;
+  }
+
+  addProductButton(productName: string, product_price: number): void {
+    this.productCounts[productName] = {
+      count: (this.productCounts[productName]?.count || 0) + 1,
+      price: product_price
+    };
+    this.cartUpdated.next(this.productCounts);
   }
 
   substractProductButton(productName: string): void {
-    if (this.productCounts[productName] && this.productCounts[productName] > 0) {
-      this.productCounts[productName]--;
+    if (this.productCounts[productName] && this.productCounts[productName].count > 0) {
+      this.productCounts[productName].count--;
+    } else {
+      delete this.productCounts[productName];
     }
+    this.cartUpdated.next(this.productCounts);
   }
 
   updateProductSearch(productName: string): void {
@@ -62,6 +78,7 @@ export class CartService {
 
   cleanCart(): void {
     this.productCounts = {};
+    this.cartUpdated.next(this.productCounts);
   }
 
   resetTotalProducts() {
@@ -81,7 +98,6 @@ export class CartService {
   }
 
   removeOrDeleteProduct(cart_id: number, product_id: number, quantity: number) {
-    console.log(httpOptions);
     return this.http.delete<any>(`http://localhost:8080/api/cart/remove-or-delete-product?id_cart=${cart_id}&id_product=${product_id}&quantity=${quantity}`, httpOptions);
   }
 

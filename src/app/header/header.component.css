@@ -33,10 +33,6 @@ h1{
     border: solid 0.01rem black;
 }
 
-#cart{
-    color: white;
-}
-
 .search-button{
     color: rgb(212, 34, 34);
     border-radius: 15px;
@@ -56,4 +52,11 @@ h1{
 
 .menu-style {
     border-radius: 5%;
+}
+
+.price {
+    font-family: sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    color: #e31122;
 }

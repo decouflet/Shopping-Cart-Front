@@ -74,13 +74,11 @@ export class ShoppingCartComponent {
 
   addProduct(product_id: number) {
     this.cartService.addProduct(this.cart_id, product_id, 1).subscribe((data) => {
-      console.log(data);
     });
   }
 
   substractProduct(product_id: number) {
     this.cartService.removeOrDeleteProduct(this.cart_id, product_id, 1).subscribe((data) => {
-      console.log(data);
     });
   }
 
@@ -108,17 +106,6 @@ export class ShoppingCartComponent {
     this.cart_create = false;
     this.cart_clean = true;
     this.products.cleanCart();
-  }
-
-  calculateCostCart() {
-    this.cartService.calculateCost(this.cart_id).subscribe((data) => {
-      Swal.fire({
-        title: 'Cart cost',
-        text: `The cart cost is ${data.value}`,
-        icon: 'info',
-        confirmButtonText: 'Ok'
-      });
-    });
   }
 
   deleteCart() {

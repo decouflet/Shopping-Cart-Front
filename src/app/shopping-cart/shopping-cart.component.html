@@ -11,7 +11,7 @@
                             </div>
                             <div class="form-group col-6">
                                 <h4>Password</h4>
-                                <input type="password" class="form-control" id="password" placeholder="Contraseña" formControlName="password" [class.is-invalid]="isInvalid('name')">
+                                <input type="password" class="form-control" id="password" placeholder="Password" formControlName="password" [class.is-invalid]="isInvalid('name')">
                             </div>
                         </div>
                     </section>
@@ -25,9 +25,6 @@
                             </div>
                             <div class="col-3 cart-button">
                                 <button type="button" class="btn btn-primary cart-button-content" [disabled]="!cart_create" (click)="deleteCart()">Delete cart</button>
-                            </div>
-                            <div class="col-3 cart-button">
-                                <button type="button" class="btn btn-primary cart-button-content" [disabled]="!cart_create" (click)="calculateCostCart()">Cost cart</button>
                             </div>
                         </div>
                     </section>

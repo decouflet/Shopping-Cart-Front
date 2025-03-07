@@ -7,6 +7,7 @@
             <app-button-shop 
                 [cart_create]="cart_create" 
                 [product_name]="product.name" 
+                [product_price]="product.price"
                 (addProductEvent)="addProduct($event)" 
                 (substracProductEvent)="substractProduct($event)">
             </app-button-shop>

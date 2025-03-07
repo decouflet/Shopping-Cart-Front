@@ -30,10 +30,39 @@
             <i class="fa fa-search" inv></i>
         </button>
     </div>
-    <div class="menu"></div>
-        <a>
+    <div class="menu dropdown">
+        <button
+        class="btn btn-light dropdown-toggle" 
+        type="button" 
+        id="cartDropdown" 
+        data-bs-toggle="dropdown" 
+        aria-expanded="false">
             <i class="fas fa-shopping-cart" id="cart"></i>
             <span class="cart">{{products_count}}</span>
-        </a>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cartDropdown">
+            <li *ngIf="cartIsEmpty()" class="dropdown-item text-muted">The cart is empty</li>
+        
+            <li *ngFor="let item of cartItems">
+              <a class="dropdown-item d-flex justify-content-between">
+                <span>{{ item.name + " x " + item.count}}</span>
+                <span class="price">{{"$" + item.price}}</span>
+              </a>
+            </li>
+        
+            <li><hr class="dropdown-divider"></li>
+            <li>
+                <a class="dropdown-item d-flex justify-content-between">
+                    <span>Total</span>
+                    <span class="badge bg-danger">{{ totalCostProducts }}</span>
+                </a>
+            </li>
+            <li>
+              <button class="dropdown-item text-center btn btn-danger" (click)="clearCart()">
+                Clear cart
+              </button>
+            </li>
+          </ul>
+    </div>
 </nav>
 
